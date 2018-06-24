@@ -21,8 +21,10 @@ COPY package.json package.json
 RUN npm install && npm cache clean
 
 # - then it needs to copy in all files from current directory
-COPY . .
+COPY . /usr/src/app
+
+#COPY . .
 ### This above means.. copy all in my current directory to current dir in the container
 
 # - then it needs to start container with command '/sbin/tini -- node ./bin/www'
-CMD ["tini", "--", "node", "./bin.www"]
+CMD ["tini", "--", "node", "./bin/www"]
