@@ -13,3 +13,13 @@ You can find the source code for the Jekyll new theme at:
 You can find the source code for Jekyll at
 {% include icon-github.html username="jekyll" %} /
 [jekyll](https://github.com/jekyll/jekyll)
+
+Run this on the main folder where the gemfile is
+
+```
+
+docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+
+```
+
+edit the _posts file and live preview
