@@ -10,3 +10,5 @@ WORKDIR /usr/share/nginx/html
 COPY index.html index.html
 
 # I don't have to specify EXPOSE or CMD because they're in my FROM
+
+## docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
