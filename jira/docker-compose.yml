@@ -13,7 +13,7 @@ services:
     ports:
       - '80:8080'
     environment:
-      - 'JIRA_DATABASE_URL=postgresql://jirauser@postgresql/jiradb'
+      - 'JIRA_DATABASE_URL=postgresql://jiradbuser@postgresql/jiradb'
       - 'JIRA_DB_PASSWORD=jiradbpass'
       - 'SETENV_JVM_MINIMUM_MEMORY=1024m'
       - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
@@ -37,10 +37,10 @@ services:
     volumes:
       - postgresqldata:/var/lib/postgresql/data
     environment:
+      - 'POSTGRES_DB=jiradb'
       - 'POSTGRES_USER=jiradbuser'
       # CHANGE THE PASSWORD!
       - 'POSTGRES_PASSWORD=jiradbpass'
-      - 'POSTGRES_DB=jiradb'
       - 'POSTGRES_ENCODING=UNICODE'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
