@@ -3,7 +3,7 @@ version: '3'
 services:
   jira-container:
     depends_on:
-      - postgresql
+      - postgres-container
     image: blacklabelops/jira   #meaning JIRA software and pulled directly from dockerhub
 #    build: .      # not building my own custom image yet
     networks:
