@@ -1,41 +1,14 @@
 version: '3'
 
 services:
-  jira-container:
-    depends_on:
-      - postgres-container
-    image: blacklabelops/jira   #meaning JIRA software and pulled directly from dockerhub
-#    build: .      # not building my own custom image yet
-    networks:
-      - jiranet
-    volumes:
-      - jiradata:/var/atlassian/jira
-    ports:
-      - '80:8080'
-    environment:
-      - 'JIRA_DATABASE_URL=postgresql://jiradbuser@postgresql/jiradb'
-      - 'JIRA_DB_PASSWORD=jiradbpass'
-      - 'SETENV_JVM_MINIMUM_MEMORY=1024m'
-      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
-      - 'JIRA_PROXY_NAME='
-      - 'JIRA_PROXY_PORT='
-      - 'JIRA_PROXY_SCHEME='
-    logging:
-      # limit logs retained on host to 25MB
-      driver: "json-file"
-      options:
-        max-size: "500k"
-        max-file: "50"
-    labels:
-      com.blacklabelops.description: "Atlassian Jira Software"
-      com.blacklabelops.service: "jira-container"
-
-  postgres-container:
+  postgres:
     image: postgres
     networks:
       - jiranet
     volumes:
       - postgresqldata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
     environment:
       - 'POSTGRES_DB=jiradb'
       - 'POSTGRES_USER=jiradbuser'
@@ -52,7 +25,37 @@ services:
         max-file: "50"
     labels:
       com.blacklabelops.description: "PostgreSQL Database Server"
-      com.blacklabelops.service: "postgres-container"
+      com.blacklabelops.service: "postgres"
+      
+  jira-container:
+    depends_on:
+      - postgres
+    image: blacklabelops/jira   #meaning JIRA software and pulled directly from dockerhub
+    networks:
+      - jiranet
+    volumes:
+      - jiradata:/var/atlassian/jira
+    ports:
+      - '80:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jiradbuser@postgres/jiradb'
+      - 'JIRA_DB_PASSWORD=jiradbpass'
+      - 'SETENV_JVM_MINIMUM_MEMORY=1024m'
+      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+    logging:
+      # limit logs retained on host to 25MB
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    labels:
+      com.blacklabelops.description: "Atlassian Jira Software"
+      com.blacklabelops.service: "jira-container"
+
+  
 
 volumes:
   jiradata:
