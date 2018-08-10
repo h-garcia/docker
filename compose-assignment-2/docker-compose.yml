@@ -1,1 +1,38 @@
 # create your drupal and postgres config here, based off the last assignment
+
+version: '2'
+
+services: 
+  drupal-container:
+    image: custom-drupal # this is not needed, just we assign the image name this was
+    build: . # use the dockerfile in this directory to build the custom image
+    ports: 
+      - "8080:80" # can check on docker hub or dowloading the container and inspecting it (docker pull drupal ... docker image inspect drupal)
+    volumes: 
+      - drupal-modules:/var/www/html/modules \
+      - drupal-profiles:/var/www/html/profiles \
+      - drupal-sites:/var/www/html/sites \
+      - drupal-themes:/var/www/html/themes \
+  postgres-container:
+    image: postgres
+    environment: 
+      - POSTGRES_PASSWORD=pass
+    volumes:  # ensure that we are keeping the data even if we restart containers
+      - drupal-data:/var/lib/postgresql/data
+
+
+volumes:
+  drupal-data:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
+
+  ### Running and setting drupal....
+
+  # go to localhost:8080
+  # default postgres db= postgres
+  # default postgres user=postgres
+  ## go to advanced.. 
+  # change server to service_name (postgres-container)
+  # default postgres port = 5432

@@ -8,9 +8,14 @@ services:
     build:
       context: .
       dockerfile: nginx.Dockerfile
+    image: nginx-custom1
+    # It will first look for this docker image in cache, if docker doesn't find it, it will build one specified above 
     ports:
       - '80:80'
   web:
     image: httpd
     volumes:
       - ./html:/usr/local/apache2/htdocs/
+
+
+# to run this... > docker-compose up
