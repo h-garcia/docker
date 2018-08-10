@@ -61,7 +61,7 @@ volumes:
   jiradata:
     external: false
   postgresqldata:
-    external: false
+    external: true
 
 networks:
   jiranet:
@@ -71,6 +71,10 @@ networks:
 ### Copy yaml file
 # curl -O https://raw.githubusercontent.com/h-garcia/docker/master/jira/docker-compose.yml
 # based on https://github.com/blacklabelops/jira
+
+### Docker run
+# docker volume create --name postgresqldata -d local
+# docker-compose up 
 
 
 ### Running and setting JIRA
