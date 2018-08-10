@@ -4,7 +4,7 @@ services:
   jira-container:
     depends_on:
       - postgres-container
-    image: blacklabelops/jira:7.11.1   #meaning JIRA software and pulled directly from dockerhub
+    image: blacklabelops/jira   #meaning JIRA software and pulled directly from dockerhub
 #    build: .      # not building my own custom image yet
     networks:
       - jiranet
@@ -28,7 +28,7 @@ services:
         max-file: "50"
     labels:
       com.blacklabelops.description: "Atlassian Jira Software"
-      com.blacklabelops.service: "jira"
+      com.blacklabelops.service: "jira-container"
 
   postgres-container:
     image: postgres
@@ -52,7 +52,7 @@ services:
         max-file: "50"
     labels:
       com.blacklabelops.description: "PostgreSQL Database Server"
-      com.blacklabelops.service: "postgresql"
+      com.blacklabelops.service: "postgres-container"
 
 volumes:
   jiradata:
